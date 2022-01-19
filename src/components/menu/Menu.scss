@@ -1,0 +1,164 @@
+@use "../../variables.scss" as *;
+
+$spacing: 10px;
+
+.menu {
+	background-color: var(--background-color);
+	top: 5px;
+	width: calc(100% - 10px);
+	left: 5px;
+	display: grid;
+	grid-template-areas: "header hamburger" "nav nav";
+	position: relative;
+	height: 74.4px;
+	transition: height 0.3s ease 0.3s, background 0.3s ease;
+
+	&.active {
+		height: calc(74.4px + 159.6px + 5px);
+		transition: height 0.3s ease, background 0.3s ease;
+	}
+}
+
+.menu__header {
+	grid-area: header;
+}
+
+.menu__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	grid-area: nav;
+	position: absolute;
+	right: 30%;
+	min-width: 481.6px;
+	bottom: 0;
+	list-style-type: none;
+	transform: translateX(-100%);
+	opacity: 0;
+	transform-origin: top;
+	transition: transform 0.3s ease, opacity 0.2s ease;
+	// transform: translateX(50%);
+
+	&.active {
+		transform: translateX(50%);
+		opacity: 1;
+		transform-origin: top;
+		transition: transform 0.3s ease 0.3s, opacity 0.2s ease 0.3s;
+	}
+	&-item {
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
+		flex-direction: row;
+		gap: 0.3125rem;
+		position: relative;
+
+		a {
+			all: unset;
+			cursor: pointer;
+			pointer-events: all;
+		}
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			width: 0px;
+			height: 0px;
+			background-color: var(--hover-color);
+			transition: width 0.3s ease, height 0.3s ease, filter 0.2s ease 0.2s;
+			z-index: -1;
+		}
+		&::after {
+			right: -$spacing;
+			top: 0;
+		}
+		&::before {
+			left: -$spacing;
+			bottom: 0;
+		}
+	}
+	@media only screen and (min-width: $mobile) {
+		&-item:is(:hover, :focus)::before,
+		&-item.active::before {
+			width: calc(100% + ($spacing * 2));
+			height: 100%;
+			filter: drop-shadow(0 0 5px var(--hover-color));
+		}
+		&-item:is(:hover, :focus)::after,
+		&-item.active::after {
+			width: calc(100% + ($spacing * 2));
+			height: 100%;
+		}
+	}
+}
+
+.menu__hamburger {
+	grid-area: hamburger;
+	width: 2.4rem;
+	height: 2.4rem;
+	justify-self: end;
+	cursor: pointer;
+	position: relative;
+
+	&-line {
+		position: absolute;
+		width: 2.4rem;
+		height: 5px;
+		border-radius: 5px;
+		background-color: var(--text-colorful);
+
+		&:nth-child(1) {
+			top: 0px;
+			transition: top 0.3s ease 0.3s, transform 0.3s ease-out 0.1s;
+		}
+		&:nth-child(2) {
+			top: 15px;
+			transition: opacity 0.3s ease 0.3s;
+		}
+		&:nth-child(3) {
+			top: 30px;
+			transition: top 0.3s ease 0.3s, transform 0.3s ease-out 0.1s;
+		}
+		&.active:nth-child(1) {
+			top: 15px;
+			transform: rotate(45deg);
+			transition: top 0.3s ease 0.1s, transform 0.3s ease-out 0.5s;
+		}
+		&.active:nth-child(2) {
+			opacity: 0;
+		}
+		&.active:nth-child(3) {
+			top: 15px;
+			transform: rotate(-45deg);
+			transition: top 0.3s ease 0.1s, transform 0.3s ease-out 0.5s;
+		}
+	}
+}
+@media only screen and (min-width: $mobile) {
+	.menu {
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-areas: "header nav user";
+		height: 74.4px;
+	}
+
+	.menu__hamburger {
+		display: none;
+	}
+
+	.menu__nav {
+		opacity: 1;
+		position: static;
+		transform: translateX(0%);
+		flex-direction: row;
+		gap: 2rem;
+		width: 100%;
+		justify-content: center;
+		transition: unset;
+	}
+
+	.menu__dark-mode-toggle {
+		grid-area: user;
+		align-self: center;
+		justify-self: end;
+	}
+}

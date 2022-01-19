@@ -1,0 +1,54 @@
+@use "../../variables.scss" as *;
+
+.toggle {
+	--size: 2rem;
+
+	position: relative;
+	background-color: var(--primary-color);
+	height: var(--size);
+	width: var(--size);
+	border-radius: 50%;
+	line-height: var(--size);
+	text-align: center;
+	cursor: pointer;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+
+	& > .icon {
+		color: white;
+		pointer-events: none;
+		font-size: calc(var(--size) - 0.7rem);
+		display: block;
+		position: absolute;
+
+		transition: transform 0.3s ease, opacity 0.2s ease 0.1s;
+		transform: rotate(360deg);
+		opacity: 0;
+
+		&.active {
+			transform: rotate(0deg);
+			opacity: 1;
+		}
+
+		&::selection {
+			background-color: transparent;
+		}
+	}
+}
+
+@media only screen and (max-width: $mobile) {
+	.toggle {
+		--size: 3rem;
+	}
+	.menu .toggle {
+		transition: transform 0.3s ease, opacity 0.2s ease;
+		transform: translateX(-500px);
+		opacity: 0;
+	}
+	.menu.active .toggle {
+		transition: transform 0.3s ease 0.3s, opacity 0.2s ease 0.3s;
+		transform: translateX(0%);
+		opacity: 1;
+	}
+}

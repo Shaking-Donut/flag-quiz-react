@@ -1,0 +1,134 @@
+@use "../../variables.scss" as *;
+
+.quiz__buttons {
+	width: 100%;
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 1rem;
+
+	@media only screen and (min-width: 500px) {
+		width: 80%;
+	}
+}
+
+.quiz__flag {
+	width: 80%;
+	margin: 0 auto;
+	object-fit: cover;
+	border-radius: 10px;
+	box-shadow: 0px 0px 0px 1px var(--flag-outline);
+	transition: outline 0.3s ease;
+}
+
+.quiz__card {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+	padding-bottom: 6rem;
+}
+
+.quiz__heading {
+	color: var(--header);
+	transition: color 0.3s ease;
+	text-align: center;
+}
+
+.quiz__header {
+	font-size: 2.5rem;
+}
+
+.quiz__subheader {
+	color: var(--subheader);
+	transition: color 0.3s ease;
+}
+
+.quiz__nav {
+	// outline: 1px solid red;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 1rem 20px;
+	padding-top: 2rem;
+	width: 100%;
+	max-width: calc(500px + 40px);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
+	z-index: 1;
+}
+
+.quiz__nav > .button {
+	flex-grow: 1;
+	flex-basis: 50%;
+}
+
+.quiz__answer {
+	border: 2px solid var(--border-color);
+	transition: border 0.3s ease;
+	border-radius: 10px;
+	padding: 1rem 1.6rem;
+
+	.color {
+		min-width: 19ch;
+	}
+}
+
+.correct.button {
+	border-color: #53d747;
+
+	&::before {
+		transform: scale(1);
+		background-color: #7ae070;
+	}
+}
+
+.incorrect.button {
+	border-color: #e23c3c;
+
+	&::before {
+		transform: scale(1);
+		background-color: #e86868;
+	}
+}
+
+div.answers__hidden {
+	transition: max-height 0.3s ease 0.1s, transform 0.3s ease, opacity 0.2s ease;
+	transform: scaleY(0);
+	opacity: 0;
+	max-height: 0px;
+	z-index: -1;
+}
+
+.answers {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	transform: scaleY(1);
+	transform-origin: top;
+	opacity: 1;
+	max-height: 350px;
+	transition: max-height 0.3s ease, transform 0.3s ease 0.1s,
+		opacity 0.2s ease 0.1s;
+	z-index: -1;
+	overflow-x: hidden;
+	scrollbar-width: thin;
+	scrollbar-color: transparentize($primary-color, 0.3)
+		transparentize($primary-color, 0.8);
+	box-shadow: inset 0px -5px 5px -5px rgb(0 0 0 / 20%),
+		inset 0px 5px 5px -5px rgb(0 0 0 / 20%);
+}
+
+.answers::-webkit-scrollbar {
+	background-color: transparentize($primary-color, 0.8);
+	border-radius: 10px;
+	width: 10px;
+}
+
+.answers::-webkit-scrollbar-thumb {
+	background-color: transparentize($primary-color, 0.4);
+	border-radius: 10px;
+}
